@@ -1,0 +1,159 @@
+let mapleader = ","
+let g:mapleader = ","
+set nocompatible              " be iMproved, required
+filetype off                  " required
+"
+" enable / disable paste mode to prevent indent format during copying
+  nnoremap <F1> :set invpaste paste?<CR>
+  imap <F1> <C-O>:set invpaste paste?<CR>
+  set pastetoggle=<F1>
+" space to fold/unfold
+  nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+  Plugin 'VundleVim/Vundle.vim'
+  Plugin 'tpope/vim-fugitive.git'
+  Plugin 'msanders/snipmate.vim.git'
+  Plugin 'tpope/vim-surround.git'
+  Plugin 'tpope/vim-git.git'
+  Plugin 'ervandew/supertab.git'
+  Plugin 'fholgado/minibufexpl.vim'
+  Plugin 'wincent/Command-T.git'
+  Plugin 'mitechie/pyflakes-pathogen.git'
+  Plugin 'mileszs/ack.vim.git'
+  Plugin 'sjl/gundo.vim.git'
+  Plugin 'fs111/pydoc.vim.git'
+  Plugin 'vim-scripts/pep8.git'
+  Plugin 'alfredodeza/pytest.vim.git'
+  Plugin 'reinh/vim-makegreen'
+  Plugin 'vim-scripts/The-NERD-tree.git'
+  Plugin 'bling/vim-airline'
+  call vundle#end()
+
+" basic settings
+  filetype on
+  filetype plugin on
+  set guioptions=ce
+  set antialias
+  set linespace=2
+  colorscheme desert 
+" system env 
+  let g:iswindows = 0
+  let g:islinux = 0
+  let g:isgui = 0
+  
+  if has("gui_running")
+    let g:isgui = 1
+  else
+    let g:isgui = 0
+  endif
+  
+  if(has("win32") || has("win64") || has("win95") || has("win16"))
+    let g:iswindows = 1
+  else
+    let g:islinux = 1
+  endif
+  
+  if has('mac')
+    let g:isMac = 1
+  else
+    let g:isMac = 0
+  endif
+
+if has("gui_running")
+    set go=aAce              " 去掉难看的工具栏和滑动条
+    set transparency=15      " 透明背景
+    "set guifont=M+\ 1mn:h14   " 设置默认字体为monaco
+    set guifont=Monaco:h12   " 设置默认字体为monaco
+    set showtabline=2        " 开启自带的tab栏
+    set columns=100          " 设置宽
+    set lines=60             " 设置长
+endif
+
+" MAC specific settings
+if has("gui_mac")
+
+  "disable IM while leaving insert mode
+  "autocmd InsertEnter * set noimdisable
+  autocmd InsertLeave * set imdisable
+
+  " move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+  nmap <D-j> mz:m+<cr>`z
+  nmap <D-k> mz:m-2<cr>`z
+  vmap <D-j> :m'>+<cr>`<my`>mzgv`yo`z
+  vmap <D-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+  " disable default menu hot key
+  macmenu &File.New\ Window key=<nop>
+  macmenu &File.Close key=<nop>
+
+  " remap cmd + w to close tab
+  map <D-w> :tabclose<CR>
+
+  " remap cmd + n to new tab
+  map <D-n> :tabnew<CR>
+
+  " map cmd + enter to switch to full screen
+  map <D-Enter> :set invfu<CR>
+
+  " map cmd+1~9 to switch tab 1~9
+  for i in range(1, 9)
+    exec "nnoremap <D-".i."> ".i."gt"
+  endfor
+
+endif
+
+" common shortkey for productivity
+" jj replace ESC in insertmode
+  im jj <ESC>
+
+" Ctrl-j/k/h/l to switch between windows
+  map <C-j> <C-W>j
+  map <C-k> <C-W>k
+  map <C-h> <C-W>h
+  map <C-l> <C-W>l
+
+" helper function
+" fast edit vimrc file
+if g:islinux
+    map <silent> <leader>ss :source ~/.vimrc<cr>
+    map <silent> <leader>ee :call SwitchToBuf("~/.vimrc")<cr>
+    autocmd! bufwritepost .vimrc source ~/.vimrc
+elseif g:iswindows
+    map <silent> <leader>ss :source ~/_vimrc<cr>
+    map <silent> <leader>ee :call SwitchToBuf("~/_vimrc")<cr>
+    autocmd! bufwritepost _vimrc source ~/_vimrc
+endif
+
+function! CmdLine(str)
+    exe "menu Foo.Bar :" . a:str
+    emenu Foo.Bar
+    unmenu Foo
+endfunction
+
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", '\\/.*$^~[]')
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'b'
+        execute "normal ?" . l:pattern . "^M"
+    elseif a:direction == 'gv'
+        call CmdLine("Ack \"" . l:pattern . "\" " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    elseif a:direction == 'f'
+        execute "normal /" . l:pattern . "^M"
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
