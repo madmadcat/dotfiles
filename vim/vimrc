@@ -74,6 +74,7 @@ if has("gui_running")
     set showtabline=2        " 开启自带的tab栏
     set columns=100          " 设置宽
     set lines=60             " 设置长
+    set cursorline           " 突出显示当前行
 endif
 
 " MAC specific settings
@@ -109,6 +110,18 @@ if has("gui_mac")
 
 endif
 
+" WINDOWS specific settings
+if g:iswindows
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+    language messages zh_CN.utf-8
+endif
+
+if g:iswindows
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+endif
+
 " common shortkey for productivity
 " jj replace ESC in insertmode
   im jj <ESC>
@@ -120,8 +133,33 @@ endif
   map <C-l> <C-W>l
 
 " helper function
+
+" function for edit ~/_vimrc in new tab
+function! SwitchToBuf(filename)
+    let bufwinnr = bufwinnr(a:filename)
+    if bufwinnr != -1
+        exec bufwinnr . "wincmd w"
+        return
+    else
+        tabfirst
+        let tab = 1
+        while tab <= tabpagenr("$")
+            let bufwinnr = bufwinnr(a:filename)
+            if bufwinnr != -1
+                exec "normal " . tab . "gt"
+                exec bufwinnr . "wincmd w"
+                return
+            endif
+            tabnext
+            let tab = tab + 1
+        endwhile
+        " not exist, new tab
+        exec "tabnew " . a:filename
+    endif
+endfunction
+
 " fast edit vimrc file
-if g:islinux
+if g:islinux || g:isMac
     map <silent> <leader>ss :source ~/.vimrc<cr>
     map <silent> <leader>ee :call SwitchToBuf("~/.vimrc")<cr>
     autocmd! bufwritepost .vimrc source ~/.vimrc
