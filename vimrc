@@ -8,7 +8,7 @@ filetype off                  " required
   imap <F1> <C-O>:set invpaste paste?<CR>
   set pastetoggle=<F1>
 " space to fold/unfold
-  nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+  nnoremap <F6> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -16,88 +16,92 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 " call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-  Plugin 'VundleVim/Vundle.vim'
-  Plugin 'tpope/vim-fugitive.git'
-  Plugin 'garbas/vim-snipmate'
-  Plugin 'MarcWeber/vim-addon-mw-utils'
-  Plugin 'tomtom/tlib_vim'
-  Plugin 'tpope/vim-surround.git'
-  Plugin 'tpope/vim-git.git'
-  Plugin 'ervandew/supertab.git'
-  Plugin 'fholgado/minibufexpl.vim'
-  Plugin 'wincent/Command-T.git'
-  Plugin 'mileszs/ack.vim.git'
-  Plugin 'sjl/gundo.vim.git'
-  Plugin 'alfredodeza/pytest.vim.git'
-  Plugin 'reinh/vim-makegreen'
-  Plugin 'vim-scripts/The-NERD-tree.git'
-  Plugin 'bling/vim-airline'
-  Plugin 'godlygeek/tabular'
-  Plugin 'majutsushi/tagbar'
-  Plugin 'hallison/vim-markdown'
-  Plugin 'ap/vim-css-color'
-  Plugin 'klen/python-mode'
+  " let Vundle manage Vundle, required
+    Plugin 'VundleVim/Vundle.vim'
+    Plugin 'tpope/vim-fugitive.git'
+  "  Plugin 'garbas/vim-snipmate'
+    Plugin 'MarcWeber/vim-addon-mw-utils'
+    Plugin 'tomtom/tlib_vim'
+    Plugin 'tpope/vim-surround.git'
+    Plugin 'tpope/vim-git.git'
+  "  Plugin 'ervandew/supertab.git'
+    Plugin 'fholgado/minibufexpl.vim'
+    Plugin 'wincent/Command-T.git'
+    Plugin 'mileszs/ack.vim.git'
+    Plugin 'sjl/gundo.vim.git'
+    Plugin 'alfredodeza/pytest.vim.git'
+    Plugin 'reinh/vim-makegreen'
+    Plugin 'vim-scripts/The-NERD-tree.git'
+    Plugin 'bling/vim-airline'
+    Plugin 'godlygeek/tabular'
+    Plugin 'majutsushi/tagbar'
+    Plugin 'hallison/vim-markdown'
+    Plugin 'ap/vim-css-color'
+    Plugin 'klen/python-mode'
+    Plugin 'Valloric/YouCompleteMe'
+    Plugin 'SirVer/ultisnips'
+    Plugin 'honza/vim-snippets'
+
   call vundle#end()
 
 " basic settings
-  filetype on
-  filetype plugin on
-  filetype indent on
-  syntax on
-  set hlsearch
-  set incsearch
-  syntax enable
-  set t_co=256
-  set guioptions=ce
-  set antialias
-  set linespace=2
-  set backspace=2                       " allow backspacing over everything in insert nc >kkmode
-  set history=1000                      " keep 1000 lines of command line history
-  set undolevels=100
-  set ruler                             " show the cursor position all the time
-  set autoread                          " auto read when file is changed from outside
-  set wrap
-  set linebreak
-  set nolist
-  set hidden
-  set linespace=0
-  set nocursorline
-  set nofoldenable
-  set number
-  set numberwidth=4
-  set title
-  set showmode
-  set nobomb                            " no BOM(Byte Order Mark)
-  set nostartofline
-  set laststatus=2
-  set clipboard+=unnamed
-  set splitright                        " always open vertical split window in the right side
-  set nosplitbelow                        " always open horizontal split window below
-  set scrolloff=5                       " start scrolling when n lines away from margins
-  set switchbuf=useopen
-  set wildmode=longest,list             " use emacs-style tab completion when selecting files, etc
-  set wildmenu                          " make tab completion for files/buffers act like bash
-  set key=			                        " disable encryption
-  set synmaxcol=128
-  set viminfo=			                    " disable .viminfo file
-  set ttyfast                           " send more chars while redrawing
-  set cmdheight=2
-  set nobackup                          " no *~ backup files
-  set noswapfile
-  set nowritebackup
-  set copyindent                        " copy the previous indentation on autoindenting
-  set ignorecase                        " ignore case when searching
-  set smartcase
-  set smarttab                          " insert tabs on the start of a line according to
-  set expandtab                         " replace <tab> with spaces
-  set softtabstop=4
-  set shiftwidth=4
-  set tabstop=4
-  set shortmess=i                       " remove splash wording
-  set autochdir
-  set mouse=a
-  set foldmethod=indent
+    filetype on
+    filetype plugin on
+    filetype indent on
+    syntax on
+    set hlsearch
+    set incsearch
+    syntax enable
+    set t_co=256
+    set guioptions=ce
+    set antialias
+    set linespace=2
+    set backspace=2                       " allow backspacing over everything in insert nc >kkmode
+    set history=1000                      " keep 1000 lines of command line history
+    set undolevels=100
+    set ruler                             " show the cursor position all the time
+    set autoread                          " auto read when file is changed from outside
+    set wrap
+    set linebreak
+    set nolist
+    set hidden
+    set linespace=0
+    set nocursorline
+    set nofoldenable
+    set number
+    set numberwidth=4
+    set title
+    set showmode
+    set nobomb                            " no BOM(Byte Order Mark)
+    set nostartofline
+    set laststatus=2
+    set clipboard+=unnamed
+    set splitright                        " always open vertical split window in the right side
+    set nosplitbelow                        " always open horizontal split window below
+    set scrolloff=5                       " start scrolling when n lines away from margins
+    set switchbuf=useopen
+    set wildmode=longest,list             " use emacs-style tab completion when selecting files, etc
+    set wildmenu                          " make tab completion for files/buffers act like bash
+    set key=			                        " disable encryption
+    set synmaxcol=128
+    set viminfo=			                    " disable .viminfo file
+    set ttyfast                           " send more chars while redrawing
+    set cmdheight=2
+    set nobackup                          " no *~ backup files
+    set noswapfile
+    set nowritebackup
+    set copyindent                        " copy the previous indentation on autoindenting
+    set ignorecase                        " ignore case when searching
+    set smartcase
+    set smarttab                          " insert tabs on the start of a line according to
+    set expandtab                         " replace <tab> with spaces
+    set softtabstop=4
+    set shiftwidth=4
+    set tabstop=4
+    set shortmess=i                       " remove splash wording
+    set autochdir
+    set mouse=a
+    set foldmethod=indent
 
 " file encoding
   set encoding=utf-8
@@ -148,11 +152,11 @@ call vundle#begin()
 
 if has("gui_running")
     set go=aAce              " 去掉难看的工具栏和滑动条
-    set transparency=10      " 透明背景
+    set transparency=3      " 透明背景
     "set guifont=Monaco:h13   " 设置默认字体为monaco
-    "set guifont=CamingoCode:h13
+    set guifont=CamingoCode:h13
     "set guifont=Tsentsiu\ Mono\ HT:h14
-    set guifont=Input:h13
+    "set guifont=Input:h13
     set showtabline=2        " 开启自带的tab栏
     "set columns=120          " 设置宽
     "set lines=40             " 设置长
@@ -223,6 +227,7 @@ endif
     map <C-k> <C-W>k
     map <C-h> <C-W>h
     map <C-l> <C-W>l
+    map <leader>w <C-W>q
 
   " Opens a new tab with the current buffer's path
   " Super useful when editing files in the same directory
@@ -233,8 +238,6 @@ endif
   " Delete buffers but buffer with !
     map <leader>bd :MBEbd[!]
 
-  " return current opened file's dirctory
-    cnoremap %% <c-r>=expand('%:h').'/'<cr>
   " 格式化json数组
     map <C-F6> :%!python -m json.tool<CR>
   " time & date map
@@ -251,19 +254,19 @@ endif
   endif
 
   " unicode symbols
-  let g:airline_left_sep = '»'
-  let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '«'
-  let g:airline_right_sep = '◀'
-  let g:airline_symbols.crypt = '🔒'
-  let g:airline_symbols.linenr = '␊'
-  let g:airline_symbols.linenr = '␤'
-  let g:airline_symbols.linenr = '¶'
-  let g:airline_symbols.branch = '⎇'
-  let g:airline_symbols.paste = 'ρ'
-  let g:airline_symbols.paste = 'Þ'
-  let g:airline_symbols.paste = '∥'
-  let g:airline_symbols.whitespace = 'Ξ'
+    let g:airline_left_sep = '»'
+    let g:airline_left_sep = '▶'
+    let g:airline_right_sep = '«'
+    let g:airline_right_sep = '◀'
+    let g:airline_symbols.crypt = '🔒'
+    let g:airline_symbols.linenr = '␊'
+    let g:airline_symbols.linenr = '␤'
+    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.paste = 'ρ'
+    let g:airline_symbols.paste = 'Þ'
+    let g:airline_symbols.paste = '∥'
+    let g:airline_symbols.whitespace = 'Ξ'
 
 " ack
   let g:ackprg="ack -H --nocolor --nogroup --column"
@@ -305,17 +308,65 @@ endif
   let g:NERDTreeWinSize=30
 
 " pymode-settings
-  let g:pymode_lint_checkers = ['pyflakes', 'pep8']
-  let g:pymode_rope_goto_definition_bind = '<C-c>g'  " 快速寻找对象的定义处
-  " disabled features, in order to make jedi-vim work properly
-  "let g:pymode_doc = 0        " disable doc in pymode
-  "let g:pymode_doc_bind = ''  " disable doc search key-binding in pymode
-  "let g:pymode_motion = 0     " disable pymode fast motion
-  "let g:pymode_run = 0        " disable runscript function
-  "let g:pymode_run_bind = ''
-  let g:pymode_rope = 0       " disable rope components in pymode
-  "let g:pymode_rope_completion = 0 "disable rope completion
-  "let g:pymode_rope_complete_on_dot = 0
+    let g:pymode_lint_checkers = ['pyflakes', 'pep8']
+    let g:pymode_rope_goto_definition_bind = '<C-c>g'  " 快速寻找对象的定义处
+    " disabled features, in order to make jedi-vim work properly
+    "let g:pymode_doc = 0        " disable doc in pymode
+    "let g:pymode_doc_bind = ''  " disable doc search key-binding in pymode
+    let g:pymode_motion = 0     " disable pymode fast motion
+    let g:pymode_run = 0        " disable runscript function
+    let g:pymode_run_bind = ''
+    let g:pymode_rope = 0       " disable rope components in pymode
+    let g:pymode_rope_completion = 0 "disable rope completion
+    let g:pymode_rope_complete_on_dot = 0
+
+" ycm settings
+    " 自定义ycm的代码跳转功能
+    nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+    nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+    nnoremap <leader>gg :YcmCompleter GoTo<CR>
+    " 离开插入模式后自动关闭preview 窗口
+    let g:ycm_autoclose_preview_window_after_completion=1
+    let g:ycm_autoclose_preview_window_after_insertion=1
+    let g:ycm_complete_in_comments=1
+
+" ultisnips
+    " 解决和ycm的补全快捷键冲突问题
+    let g:UltiSnipsExpandTrigger       = "<c-tab>"
+    let g:UltiSnipsJumpForwardTrigger  = "<tab>"
+    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+    " If you want :UltiSnipsEdit to split your window.
+    let g:UltiSnipsEditSplit="vertical"
+    " Enable tabbing through list of results
+    function! g:UltiSnips_Complete()
+        call UltiSnips#ExpandSnippet()
+        if g:ulti_expand_res == 0
+            if pumvisible()
+                return "\<C-n>"
+            else
+                call UltiSnips#JumpForwards()
+                if g:ulti_jump_forwards_res == 0
+                   return "\<TAB>"
+                endif
+            endif
+        endif
+        return ""
+    endfunction
+
+    au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+
+    " Expand snippet or return
+    let g:ulti_expand_res = 0
+    function! Ulti_ExpandOrEnter()
+        call UltiSnips#ExpandSnippet()
+        if g:ulti_expand_res
+            return ''
+        else
+            return "\<return>"
+    endfunction
+
+    " Set <space> as primary trigger
+    inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
 
 " helper function
   set csprg=/usr/local/bin/cscope
